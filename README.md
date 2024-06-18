@@ -102,6 +102,39 @@ GROUP BY
 	avg_transfer_time
 ;
 
+DROP VIEW `strategy-bi-ltd.ml.vera_frames`;
+
+CREATE VIEW `strategy-bi-ltd.ml.vera_frames_merged2` AS
+WITH tab AS (
+	SELECT 
+	avg_turnaround_time, 
+	avg_transfer_time, 
+	min_total_MB_consumed, 
+	max_total_MB_consumed, 
+	avg_total_MB_consumed, 
+	sum_total_MB_consumed, 
+	avg_cnt_request_id, 
+	cnt_total_MB_consumed, 
+	min_cnt_request_id, 
+	max_cnt_request_id, 
+	cnt_cnt_request_id, 
+	sum_cnt_request_id, 
+	COALESCE(user_agent2, '') AS user_agent2,
+	COALESCE(asn_country, '') AS asn_country,
+	COALESCE(asn_type, '') AS asn_type,
+	COALESCE(channel, '') AS channel,
+	CASE WHEN user_agent_status = 'bad' THEN 1 ELSE 0 END as label,
+	GENERATE_UUID() AS rowid
+	FROM `strategy-bi-ltd.ml.vera_frames_merged`
+	WHERE COALESCE(user_agent_status, 'TBD') <> 'good'
+),
+tab2 AS (
+	SELECT *, row_number()over(partition by label order by rowid) AS rn
+	FROM tab
+)
+SELECT * FROM tab2
+WHERE rn <= 250000;
+
 ```
 
 The pipeline can be found in the notebook.  
