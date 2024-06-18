@@ -102,7 +102,7 @@ GROUP BY
 	avg_transfer_time
 ;
 
-DROP VIEW `strategy-bi-ltd.ml.vera_frames`;
+DROP VIEW `strategy-bi-ltd.ml.vera_frames_merged2`;
 
 CREATE VIEW `strategy-bi-ltd.ml.vera_frames_merged2` AS
 WITH tab AS (
