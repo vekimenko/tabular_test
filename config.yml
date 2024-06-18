@@ -1,0 +1,11 @@
+PROJECT: "strategy-bi-ltd"
+REGION: "europe-west1"
+SERVICE_ACCOUNT: "mlops-compute@strategy-bi-ltd.iam.gserviceaccount.com"
+BUCKET: "mlops-mlops"
+VERSION: "v04"
+DATASET_DISPLAY_NAME: "baseline"
+RAW_SCHEMA_DIR: "raw_schema"
+MLMD_SQLLITE: "mlmd.sqllite"
+REMOVE_ARTIFACTS: True
+MODULE_FILE: "model.py"
+LABEL: "label"
